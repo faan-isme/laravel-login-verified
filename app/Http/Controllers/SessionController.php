@@ -34,7 +34,7 @@ class SessionController extends Controller
         ];
 
         if (Auth::attempt($infoLogin)) {
-            redirect()->route('home');
+            return redirect()->route('home');
         }else{
             return back()->withErrors('username dan password yang dimasukkan tidak sesuai');
         }
