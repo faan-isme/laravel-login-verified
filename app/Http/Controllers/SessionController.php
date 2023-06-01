@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,6 +42,7 @@ class SessionController extends Controller
             return back()->withErrors('username dan password yang dimasukkan tidak sesuai');
         }
     }
+
     function create(Request $request)
     {
         Session::flash('name', $request->input('name'));
@@ -65,19 +67,24 @@ class SessionController extends Controller
                 'name'=>$request->name,
                 'email'=>$request->email,
                 'password'=>Hash::make($request->password)
-
         ];
-        User::create($data);
+        $user = User::create($data);
+
+        event(new Registered($user));
+        
         $infologin = [
             'email' => $request->email,
             'password' => $request->password
         ];
-    
-        if (Auth::attempt($infologin)) {
-            return redirect()->route('home');
-        }else{
-            return redirect()->route('index')->withErrors('username dan password yang dimasukkan tidak sesuai');
-        }
+        Auth::attempt($infologin);
+        return redirect()->route('verification.notice')->with('succes', 'Akun berhasil di buat');
 
+
+    }
+
+    function logout()
+    {
+        Auth::logout();
+        return redirect()->route('index');
     }
 }
