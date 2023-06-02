@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body>
-@if (session('succes'))
+@if (session('succes') || session('massage'))
     <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div id="alert-additional-content-3" class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
             <div class="flex items-center">
@@ -17,7 +17,8 @@
             <h3 class="text-lg font-medium">Berhasil</h3>
             </div>
             <div class="mt-2 mb-4 text-sm">
-            Akun telah berhasil dibuat, silahkan verifikasi melalui email yang dikirim!
+                {{ session('succes') }}
+                {{ session('massage') }}
             </div>
             <div class="flex">
             <a href="/">
@@ -25,11 +26,12 @@
                    Sign In
                 </button>
             </a>
-            <a href="/register">
-                <button type="button" class="text-green-800 bg-transparent border border-green-800 hover:bg-green-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-green-600 dark:border-green-600 dark:text-green-400 dark:hover:text-white dark:focus:ring-green-800" data-dismiss-target="#alert-additional-content-3" aria-label="Close">
+            <form action="/email/verification-notification" method="POST">
+                @csrf
+                <button type="submit" class="text-green-800 bg-transparent border border-green-800 hover:bg-green-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-green-600 dark:border-green-600 dark:text-green-400 dark:hover:text-white dark:focus:ring-green-800" data-dismiss-target="#alert-additional-content-3" aria-label="Close">
                     Kirim Ulang
                 </button>
-            </a>
+            </form>
             
             </div>
         </div>
@@ -51,11 +53,12 @@
                     Kembali
                 </button>
             </a>
-            <a href="">
-                <button type="button" class="text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800" data-dismiss-target="#alert-additional-content-1" aria-label="Close">
+            <form action="/email/verification-notification" method="POST">
+                @csrf
+                <button type="submit" class="text-blue-800 bg-transparent border border-blue-800 hover:bg-blue-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-blue-600 dark:border-blue-600 dark:text-blue-400 dark:hover:text-white dark:focus:ring-blue-800" data-dismiss-target="#alert-additional-content-1" aria-label="Close">
                     Kirim Ulang
                 </button>
-             </a>
+            </form>
             </div>
         </div>
     </div>

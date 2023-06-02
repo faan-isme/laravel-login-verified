@@ -26,3 +26,4 @@ Route::get('/create', [SessionController::class, 'register']);
 Route::get('/logout', [SessionController::class, 'logout'])->name('logout');
 Route::get('/email/verify', [VerificationController::class,'notice'])->name('verification.notice')->middleware('auth');
 Route::get('/email/verify/{id}/{hash}',[VerificationController::class, 'verify'])->name('verification.verify')->middleware(['auth', 'signed']);
+Route::post('/email/verification-notification',[VerificationController::class, 'resendVerif'])->middleware(['auth', 'throttle:1,1'])->name('verification.send');
