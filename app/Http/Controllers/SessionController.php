@@ -77,7 +77,7 @@ class SessionController extends Controller
             'password' => $request->password
         ];
         Auth::attempt($infologin);
-        return redirect()->route('verification.notice')->with('succes', 'Akun berhasil di buat');
+        return redirect()->route('verification.notice')->with('succes', 'Akun telah berhasil dibuat, silahkan verifikasi melalui email yang dikirim!');
 
 
     }
